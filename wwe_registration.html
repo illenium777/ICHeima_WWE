@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWE报名表</title>
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background: rgba(0, 0, 0, 0.8) url('img/WWE.png') center/cover fixed;
+            background-blend-mode: overlay;
+            color: #fff;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff4500;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff4500;
+            box-shadow: 0 0 8px rgba(255, 69, 0, 0.3);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            accent-color: #ff4500;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        input:invalid, select:invalid {
+            border-color: #dc3545;
+        }
+
+        input:invalid + .error-message, select:invalid + .error-message {
+            display: block;
+        }
+
+        input[type="submit"] {
+            background-color: #ff4500;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e03e00;
+            transform: translateY(-1px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="wwe_registration.html">报名表</a></li>
+        </ul>
+    </nav>
+    <h1>WWE报名表</h1>
+    <form id="wweRegistrationForm">
+        <div class="form-group">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" required>
+            <span class="error-message">请输入姓名</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">邮箱:</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error-message">请输入有效的邮箱地址</span>
+        </div>
+
+        <div class="form-group">
+            <label for="age">年龄:</label>
+            <input type="number" id="age" name="age" min="18" max="60" required>
+            <span class="error-message">年龄需在18-60岁之间</span>
+        </div>
+
+        <div class="form-group">
+            <label>性别:</label>
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="male" required> 男</label>
+                <label><input type="radio" name="gender" value="female"> 女</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="experience">摔跤经验:</label>
+            <select id="experience" name="experience" required>
+                <option value="" disabled selected>请选择</option>
+                <option value="beginner">新手</option>
+                <option value="intermediate">中级</option>
+                <option value="advanced">高级</option>
+            </select>
+            <span class="error-message">请选择摔跤经验</span>
+        </div>
+
+        <div class="form-group">
+            <label for="comments">备注:</label>
+            <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
+        </div>
+
+        <input type="submit" value="提交报名表">
+    </form>
+    <script>
+        document.getElementById('wweRegistrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            if (this.checkValidity()) {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    age: document.getElementById('age').value,
+                    gender: document.querySelector('input[name="gender"]:checked').value,
+                    experience: document.getElementById('experience').value,
+                    comments: document.getElementById('comments').value
+                };
+
+                // 这里可以添加将表单数据发送到服务器的代码
+                console.log('提交的表单数据:', formData);
+                alert('报名表提交成功！');
+                this.reset();
+            } else {
+                this.reportValidity();
+            }
+        });
+    </script>
+</body>
+</html>
